@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>2.3.DrawOneSquare</title>
+    <!--
+            VertexShader identifica y carga el vertexshader en memoria
+            vec3 tipo una matriz de tres números de punto flotante.
+            aSquareVertexPosition contendra los vertices de las posiciones
+            del cuadrado.
+
+            gl_Position convierte el vec3 en vec4 para la conversión de escaneo y
+            asignar a gl_Position para pasar el vértice al sombreador de fragmentos  pasa la información
+            a WebGL.                                           
+         -->
+    <script type="x-shader/x-vertex" id="VertexShader">
+            attribute vec3 aSquareVertexPosition;
+
+            void main(void) {
+                gl_Position = vec4(aSquareVertexPosition, 1.0); 
+            }
+        </script>
+    <!--
+        gl_FragColor determina el color del píxel.                                   
+         -->
+    <script type="x-shader/x-fragment" id="FragmentShader">
+            void main(void) {                
+                gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+            }
+        </script>
+
+    <script type="text/javascript" src="src/ShaderSupport.js"></script>
+    <script type="text/javascript" src="src/VertexBuffer.js"></script>
+    <script type="text/javascript" src="src/WebGL.js"></script>
+</head>
+
+<body onload="doGLDraw()">
+    <canvas id="GLCanvas" width="640" height="480">
+        Your browser does not support the HTML5 canvas.
+    </canvas>
+</body>
+
+</html>
