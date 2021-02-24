@@ -1,23 +1,23 @@
-"use strict";  // Operate in Strict mode such that variables must be declared before used!
+"use strict";  
 
 function MyGame(htmlCanvasID) {
-    // The shader for drawing
+    // El sombreador para dibujar
     this.mShader = null;
 
-    // Step A: Initialize the webGL Context and the VertexBuffer
+    // Paso A: Inicializar el contexto webGL y VertexBuffer
     gEngine.Core.initializeWebGL(htmlCanvasID);
 
-    // Step B: Create, load and compile the shaders
+    // Paso B: Crea, carga y compila los sombreadores
     this.mShader = new SimpleShader("VertexShader", "FragmentShader");
 
-    // Step C: Draw!
-    // Step C1: Clear the canvas
-    gEngine.Core.clearCanvas([0, 0.8, 0, 1]);
+    // Paso C: ¡Dibuja!
+    // Paso C1: Limpiar el lienzo
+    gEngine.Core.clearCanvas([0, 0.7, 0, 1]);
 
-    // Step C2: Activate the proper shader
+    // Paso C2: Activa el sombreador adecuado
     this.mShader.activateShader();
 
-    // Step C3: Draw with the currently activated geometry and the activated shader
+    // Paso C3: Dibuja con la geometría activada actualmente y el sombreador activado
     var gl = gEngine.Core.getGL();
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }

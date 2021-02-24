@@ -24,17 +24,17 @@ var gEngine = gEngine || { };
             return;
          }
 
-      // now initialize the VertexBuffer
+      // Inicializamos VertexBuffer
       gEngine.VertexBuffer.initialize();
    };
 
-   // Clears the draw area and draws one square
+   // Limpia el área de dibujo y dibuja un cuadrado
    var clearCanvas = function(color) {
-      mGL.clearColor(color[0], color[1], color[2], color[3]); // set the color to be cleared
-      mGL.clear(mGL.COLOR_BUFFER_BIT); // clear to the color previously set
+      mGL.clearColor(color[0], color[1], color[2], color[3]); // establece el color a borrar
+      mGL.clear(mGL.COLOR_BUFFER_BIT); // Claro al color previamente establecido
   };
 
-   // Contains the functions and variables that will be accessible.
+   // Contiene las funciones y variables a las que se podrá acceder.
   var mPublic = {
         getGL: getGL,
         initializeWebGL: initializeWebGL,

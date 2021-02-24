@@ -1,86 +1,83 @@
 function SimpleShader(vertexShaderID, fragmentShaderID) {
-    // instance variables (Convention: all instance variables: mVariables)
 
     this.mCompiledShader = null;
-    // reference to the compiled shader in webgl context
+    // referencia al sombreador compilado en el contexto webgl
 
     this.mShaderVertexPositionAttribute = null;
-    // reference to SquareVertexPosition in shader
+    // referencia a SquareVertexPosition en el sombreador
 
     var gl = gEngine.Core.getGL();
 
-    // start of constructor code
-    //
-    // Step A: load and compile vertex and fragment shaders
+    // Paso A: cargar y compilar sombreadores de vértices y fragmentos
     var vertexShader = this._loadAndCompileShader(vertexShaderID, gl.VERTEX_SHADER);
     var fragmentShader = this._loadAndCompileShader(fragmentShaderID,
         gl.FRAGMENT_SHADER);
 
-    // Step B: Create and link the shaders into a program.
+    // Paso B: Crea y vincula los sombreadores a un programa.
     this.mCompiledShader = gl.createProgram();
     gl.attachShader(this.mCompiledShader, vertexShader);
     gl.attachShader(this.mCompiledShader, fragmentShader);
     gl.linkProgram(this.mCompiledShader);
 
-    // Step C: check for error
+    // Paso C: buscar error
     if (!gl.getProgramParameter(this.mCompiledShader, gl.LINK_STATUS)) {
         alert("Error linking shader");
         return null;
     }
 
-    // Step D: Gets a reference to the aSquareVertexPosition attribute
+    // Paso D: Obtiene una referencia al atributo aSquareVertexPosition
     this.mShaderVertexPositionAttribute = gl.getAttribLocation(this.mCompiledShader,
         "aSquareVertexPosition");
 
-    // Step E: Activates the vertex buffer loaded in Engine.Core_VertexBuffer
+    // Paso E: Activa el búfer de vértice cargado en Engine.Core_VertexBuffer
     gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
 
-    /// Step F: Describe the characteristic of the vertex position attribute
+    /// Paso F: Describe la característica del atributo de posición del vértice
     gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
-        3, // each element is a 3-float (x,y.z)
-        gl.FLOAT, // data type is FLOAT
-        false, // if the content is normalized vectors
-        0, // number of bytes to skip in between elements
-        0); // offsets to the first element
+        3,              // cada elemento es un 3-float (x, y.z)
+        gl.FLOAT,       // el tipo de datos es FLOAT
+        false,          // si el contenido son vectores normalizados
+        0,              // número de bytes para saltar entre elementos
+        0);             // compensaciones al primer elemento
 }
 
-// Access to the compiled shader
+// Acceso al sombreador compilado
 SimpleShader.prototype.getShader = function () { return this.mCompiledShader; };
 
-// Activate the shader for rendering
+// Activa el sombreador para renderizar
 SimpleShader.prototype.activateShader = function () {
     var gl = gEngine.Core.getGL();
     gl.useProgram(this.mCompiledShader);
     gl.bindBuffer(gl.ARRAY_BUFFER, gEngine.VertexBuffer.getGLVertexRef());
     gl.vertexAttribPointer(this.mShaderVertexPositionAttribute,
-        3,              // each element is a 3-float (x,y.z)
-        gl.FLOAT,       // data type is FLOAT
-        false,          // if the content is normalized vectors
-        0,              // number of bytes to skip in between elements
-        0);             // offsets to the first element
+        3,              // cada elemento es un 3-float (x, y.z)
+        gl.FLOAT,       // el tipo de datos es FLOAT
+        false,          // si el contenido son vectores normalizados
+        0,              // número de bytes para saltar entre elementos
+        0);             // compensaciones al primer elemento
     gl.enableVertexAttribArray(this.mShaderVertexPositionAttribute);
 };
 
-// Returns a complied shader from a shader in the dom.
-// The id is the id of the script in the html tag.
+// Devuelve un sombreador compilado de un sombreador en el dom.
+// El id es el id del script en la etiqueta html.
 SimpleShader.prototype._loadAndCompileShader = function (id, shaderType) {
     var shaderText, shaderSource, compiledShader;
     var gl = gEngine.Core.getGL();
 
-    // Step A: Get the shader source from index.html
+    // Paso A: Obtén la fuente del sombreador de index.html
     shaderText = document.getElementById(id);
     shaderSource = shaderText.firstChild.textContent;
 
-    // Step B: Create the shader based on the shader type: vertex or fragment
+    // Paso B: Crea el sombreador basado en el tipo de sombreador: vértice o fragmento
     compiledShader = gl.createShader(shaderType);
 
-    // Step C: Compile the created shader
+    // Paso C: compila el sombreador creado
     gl.shaderSource(compiledShader, shaderSource);
     gl.compileShader(compiledShader);
 
-    // Step D: check for errors and return results (null if error)
-    // The log info is how shader compilation errors are typically displayed.
-    // This is useful for debugging the shaders.
+    // Paso D: verificar errores y devolver resultados (nulo si hay error)
+     // La información de registro es cómo se muestran normalmente los errores de compilación del sombreador.
+     // Esto es útil para depurar los sombreadores.
     if (!gl.getShaderParameter(compiledShader, gl.COMPILE_STATUS)) {
         alert("A shader compiling error occurred: " +
             gl.getShaderInfoLog(compiledShader));
