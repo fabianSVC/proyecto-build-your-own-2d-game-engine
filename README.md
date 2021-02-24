@@ -1,4 +1,4 @@
-# proyecto-build-your-own-2d-game-engineç
+# proyecto-build-your-own-2d-game-engine
 
 Integrantes:
 Fabian Stiven Valencia Cordoba, codigo: 2110047-3743
